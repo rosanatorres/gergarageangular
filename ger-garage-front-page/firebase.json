@@ -1,0 +1,16 @@
+{
+    "hosting": {
+      "public": "dist/Ger-Garage-Front-Page",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  }
