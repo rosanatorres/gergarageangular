@@ -1,0 +1,594 @@
+<!-- Dashboard -->
+<div class="d-flex flex-column flex-lg-row h-lg-full bg-background-color">
+    <!-- Main content -->
+    <div class="h-screen flex-grow-1 overflow-y-lg-auto">
+      <!-- Header -->
+      <header class="bg-surface-primary border-bottom pt-6">
+        <div class="container-fluid">
+          <div class="mb-npx">
+            <div class="row align-items-center">
+              <div class="col-sm-6 col-12 mb-4 mb-sm-0">
+                <!-- Title -->
+                <h1 class="h2 mb-0 ls-tight">Booking Management</h1>
+              </div>
+              <!-- Actions -->
+              <div class="col-sm-6 col-12 text-sm-end">
+                <div class="mx-n1">
+                  <a
+                    class="btn d-inline-flex btn-sm btn-neutral border-base mx-1"
+                  >
+                    <span class="pe-2">
+                      <!-- <i class="bi bi-pencil"></i> -->
+                    </span>
+                    <span>Admin</span>
+                  </a>
+                  <a
+                    class="btn d-inline-flex btn-sm btn-success border-base mx-1"
+                    (click)="exportexcel()"
+                  >
+                    <span class="pe-2">
+                      <!-- <i class="bi bi-pencil"></i> -->
+                    </span>
+                    <span style="color: white">Export Data</span>
+                  </a>
+                  <a
+                    class="btn d-inline-flex btn-sm btn-danger mx-1"
+                    (click)="logOut()"
+                  >
+                    <span class="pe-2">
+                      <!-- <i class="bi bi-plus"></i> -->
+                    </span>
+                    <span>Logout</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!-- Nav -->
+            <ul class="nav nav-tabs mt-4 overflow-x border-0"></ul>
+          </div>
+        </div>
+      </header>
+      <!-- Main -->
+      <main class="py-6 bg-background-color">
+        <div class="container-fluid" style="height: 100vh">
+          <!-- Card stats -->
+          <div class="row g-6 mb-6">
+            <div class="col-xl-3 col-sm-6 col-12">
+              <div
+                class="card shadow border-0"
+                style="border: 5px solid #ffaeae !important"
+              >
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        class="h6 font-semibold text-muted text-sm d-block mb-2"
+                        >Total Revenue</span
+                      >
+                      <span class="h3 font-bold mb-0">€{{ totalRevenue }}</span>
+                    </div>
+                    <div class="col-auto">
+                      <div
+                        class="icon icon-shape bg-tertiary text-white text-lg rounded-circle"
+                      >
+                        <i class="bi bi-credit-card"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2 mb-0 text-sm">
+                    <span
+                      class="badge badge-pill bg-soft-success text-success me-2"
+                    >
+                      <i class="bi bi-arrow-up me-1"></i>13%
+                    </span>
+                    <span class="text-nowrap text-xs text-muted"
+                      >Since last month</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+              <div
+                class="card shadow border-0"
+                style="border: 5px solid #ffaeae !important"
+              >
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        class="h6 font-semibold text-muted text-sm d-block mb-2"
+                        >New Bookings</span
+                      >
+                      <span
+                        class="h3 font-bold mb-0"
+                        *ngIf="this.bookingData != undefined"
+                        >{{ this.bookingData.length }}</span
+                      >
+                    </div>
+                    <div class="col-auto">
+                      <div
+                        class="icon icon-shape bg-primary text-white text-lg rounded-circle"
+                      >
+                        <i class="bi bi-people"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2 mb-0 text-sm">
+                    <span
+                      class="badge badge-pill bg-soft-success text-success me-2"
+                    >
+                      <i class="bi bi-arrow-up me-1"></i>30%
+                    </span>
+                    <span class="text-nowrap text-xs text-muted"
+                      >Since last month</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+              <div
+                class="card shadow border-0"
+                style="border: 5px solid #ffaeae !important"
+              >
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        class="h6 font-semibold text-muted text-sm d-block mb-2"
+                        >Total Profit</span
+                      >
+                      <span class="h3 font-bold mb-0"
+                        >€{{ this.totalProfit }}</span
+                      >
+                    </div>
+                    <div class="col-auto">
+                      <div
+                        class="icon icon-shape bg-info text-white text-lg rounded-circle"
+                      >
+                        <i class="bi bi-clock-history"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2 mb-0 text-sm">
+                    <span
+                      class="badge badge-pill bg-soft-danger text-danger me-2"
+                    >
+                      <i class="bi bi-arrow-down me-1"></i>-5%
+                    </span>
+                    <span class="text-nowrap text-xs text-muted"
+                      >Since last month</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+              <div
+                class="card shadow border-0"
+                style="border: 5px solid #ffaeae !important"
+              >
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        class="h6 font-semibold text-muted text-sm d-block mb-2"
+                        >Damaged Stocks</span
+                      >
+                      <span class="h3 font-bold mb-0">95%</span>
+                    </div>
+                    <div class="col-auto">
+                      <div
+                        class="icon icon-shape bg-warning text-white text-lg rounded-circle"
+                      >
+                        <i class="bi bi-minecart-loaded"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2 mb-0 text-sm">
+                    <span
+                      class="badge badge-pill bg-soft-success text-success me-2"
+                    >
+                      <i class="bi bi-arrow-up me-1"></i>10%
+                    </span>
+                    <span class="text-nowrap text-xs text-muted"
+                      >Since last month</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div
+            class="site__box-link"
+            style="margin: auto; width: 100%; text-align: center; padding: 20px"
+          >
+            <a
+              [ngClass]="
+                this.isPart
+                  ? 'btn23 btn--width test bgTest'
+                  : 'btn23 btn--revert btn--width'
+              "
+              (click)="setTable('Parts')"
+              >Parts</a
+            >
+            <a
+              [ngClass]="
+                !this.isPart
+                  ? 'btn23 btn--width test bgTest'
+                  : 'btn23 btn--revert btn--width'
+              "
+              (click)="setTable('Booking')"
+              >Booking</a
+            >
+          </div>
+          <div
+            class="site__box-link"
+            style="margin: auto; width: 100%; text-align: center; padding: 20px"
+          >
+            <a
+              [ngClass]="
+                this.categorySelected == 'All'
+                  ? 'btn23 btn--width test'
+                  : 'btn23 btn--revert btn--width'
+              "
+              (click)="setCategory('All')"
+              >All</a
+            >
+            <a
+              [ngClass]="
+                this.categorySelected == 'Booked'
+                  ? 'btn23 btn--width test'
+                  : 'btn23 btn--revert btn--width'
+              "
+              (click)="setCategory('Booked')"
+              >Booked</a
+            >
+            <a
+              [ngClass]="
+                this.categorySelected == 'In Service'
+                  ? 'btn23 btn--width test'
+                  : 'btn23 btn--revert btn--width'
+              "
+              (click)="setCategory('In Service')"
+              >In Service</a
+            >
+            <a
+              [ngClass]="
+                this.categorySelected == 'Fixed'
+                  ? 'btn23 btn--width test'
+                  : 'btn23 btn--revert btn--width'
+              "
+              (click)="setCategory('Fixed')"
+              >Fixed</a
+            >
+            <a
+              [ngClass]="
+                this.categorySelected == 'Collected'
+                  ? 'btn23 btn--width test'
+                  : 'btn23 btn--revert btn--width'
+              "
+              (click)="setCategory('Collected')"
+              >Collected</a
+            >
+            <a
+              [ngClass]="
+                this.categorySelected == 'Unrepairable'
+                  ? 'btn23 btn--width test'
+                  : 'btn23 btn--revert btn--width'
+              "
+              (click)="setCategory('Unrepairable')"
+              >Unrepairable</a
+            >
+          </div>
+          <div
+            class="card shadow border-0 mb-7"
+            style="border: 5px solid #ffaeae !important"
+          >
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0">Upcoming Bookings</h5>
+              <div class="filter-by-date" *ngIf="!isPart">
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  [(ngModel)]="byDate"
+                  placeholder="Filter By Date"
+                  style="border: none; outline: none"
+                />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table
+                class="table table-hover table-nowrap"
+                id="excel-table"
+                *ngIf="isBooking"
+              >
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Booking Date</th>
+                    <th scope="col">Vehicle</th>
+                    <th scope="col">Service Type</th>
+                    <th scope="col">Cost</th>
+                    <th scope="col">Mechanic Assigned</th>
+                    <th scope="col">Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let booking of getFilteredData(); let i = index">
+                    <td>
+                      <a class="text-heading font-semibold">{{
+                        booking.userDetail.firstName +
+                          " " +
+                          booking.userDetail.lastName
+                      }}</a>
+                    </td>
+                    <td>{{ booking.bookingDate | date : "mediumDate" }}</td>
+                    <td>
+                      <a class="text-heading font-semibold">{{
+                        booking.vehicleDetail.make +
+                          " ( " +
+                          booking.vehicleDetail.model +
+                          " ) "
+                      }}</a>
+                    </td>
+                    <td>{{ booking.category }}</td>
+                    <td>€{{ booking.initialCost }}</td>
+                    <td>
+                      <a class="btn btn-sm btn-neutral">
+                        <span
+                          class="badge badge-lg badge-dot"
+                          (click)="selectedRow(i); mechanicMenuTrigger.openMenu()"
+                        >
+                          <i class="bg-danger"></i>{{ booking.mechanicAssigned }}
+                        </span>
+                        <span
+                          class="badge badge-lg badge-dot"
+                          mat-button
+                          [matMenuTriggerFor]="mechanic"
+                          #mechanicMenuTrigger="matMenuTrigger"
+                          style="visibility: hidden; width: 0"
+                        >
+                          <i class="bg-danger"></i>{{ booking.mechanicAssigned }}
+                        </span>
+                      </a>
+                    </td>
+                    <td>
+                      <a class="btn btn-sm btn-neutral">
+                        <span
+                          class="badge badge-lg badge-dot"
+                          (click)="selectedRow(i); statusMenuTrigger.openMenu()"
+                        >
+                          <i class="bg-success"></i>{{ booking.bookingStatus }}
+                        </span>
+                        <span
+                          class="badge badge-lg badge-dot"
+                          mat-button
+                          [matMenuTriggerFor]="status"
+                          #statusMenuTrigger="matMenuTrigger"
+                          style="visibility: hidden; width: 0"
+                        >
+                          <i class="bg-success"></i>{{ booking.bookingStatus }}
+                        </span>
+                      </a>
+                    </td>
+                    <td class="text-end">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-square btn-neutral text-danger-hover"
+                        (click)="addAdditionalParts(booking, additionalParts, i)"
+                      >
+                        <i class="bi bi-cart-plus-fill"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-square btn-neutral text-danger-hover"
+                        (click)="viewInvoice(booking, invoice, i)"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-square btn-neutral text-danger-hover"
+                        (click)="deleteBooking(booking.id, i)"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- (click)="changeStatus(booking.bookingStatus, i)" -->
+              <table
+                class="table table-hover table-nowrap"
+                *ngIf="isPart"
+                id="excel-table"
+              >
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Part/Service Name</th>
+                    <th scope="col">Manufacturer</th>
+                    <th scope="col">Original Cost</th>
+                    <th scope="col">Discounted Cost</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let part of getFilteredData(); let i = index">
+                    <td>
+                      <a class="text-heading font-semibold">{{ part.name }}</a>
+                    </td>
+                    <td>{{ part.manufacturer }}</td>
+                    <td>
+                      <a class="text-heading font-semibold">€{{ part.price }}</a>
+                    </td>
+                    <td>€{{ part.price }}</td>
+                    <td class="text-end">
+                      <a
+                        class="btn btn-sm btn-neutral"
+                        (click)="viewComment(part, content, i)"
+                        >Delete</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Reviews</h4>
+    </div>
+    <div class="modal-body">
+      <ol class="timeline" *ngFor="let review of reviewsData; let i = index">
+        <li
+          class="timeline-item | extra-space"
+          (dblclick)="deleteReview(review, i)"
+        >
+          <div class="timeline-item-wrapper">
+            <div class="timeline-item-description">
+              <i class="avatar | small">
+                <img src="https://assets.codepen.io/285131/hat-man.png" />
+              </i>
+              <span
+                ><a>{{ review.username }}</a></span
+              >
+            </div>
+            <div class="comment">
+              <p>{{ review.message }} 😊</p>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="modal.close('Save click')"
+      >
+        Close
+      </button>
+    </div>
+  </ng-template>
+  
+  <ng-template #invoice let-modal>
+    <div class="modal-header d-flex align-items-center" style="padding: 10px">
+      <h4 class="modal-title" id="modal-basic-title">Customer Invoice</h4>
+    </div>
+    <div class="modal-body" id="customer_invoice">
+      <img src="../../assets/images/logo-black.png" class="invoice-logo" alt="" />
+      <div class="invoice-body">
+        <p>
+          <b>Customer Name : </b>{{ selectedBooking.userDetail.firstName }}
+          {{ selectedBooking.userDetail.lastName }}
+        </p>
+        <p><b>Phone Number : </b>{{ selectedBooking.userDetail.phoneNumber }}</p>
+        <br />
+        <p>
+          <b>Vehicle : </b>{{ selectedBooking.vehicleDetail.make }}
+          {{ selectedBooking.vehicleDetail.model }}
+        </p>
+        <p><b>Licencse Number : </b>{{ selectedBooking.licenseNumber }}</p>
+        <br />
+        <p>
+          <b>{{ selectedBooking.category }} : </b>€{{
+            selectedBooking.initialCost
+          }}
+        </p>
+        <br />
+        <hr *ngIf="selectedBooking?.additionalParts && selectedBooking?.additionalParts.length > 0"/>
+        <p *ngFor="let parts of selectedBooking?.additionalParts">
+          <b>{{ parts.name }} : </b>€{{ parts.price }}
+        </p>
+        <br />
+        <div class="totalCost">
+          <b>Total Cost : </b> €{{ additionalCostInEuro }}
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer d-flex align-items-center" style="padding: 10px">
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-dark"
+        (click)="exportAsPDF('customer_invoice'); modal.close('Save click')"
+      >
+        Save as PDF
+      </button>
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-dark"
+        (click)="modal.close('Save click')"
+      >
+        Close
+      </button>
+    </div>
+  </ng-template>
+  
+  <ng-template #additionalParts let-modal>
+    <div class="modal-header d-flex align-items-center" style="padding: 10px">
+      <h4 class="modal-title" id="modal-basic-title">
+        Additional Service Charges / Parts
+      </h4>
+    </div>
+    <div class="modal-body" id="customer_invoice">
+      <div
+        *ngFor="let parts of this.partsData"
+        class="partsStyling"
+        (click)="addParts(parts)"
+        [ngClass]="checkIfPartExist(parts) ? 'partSelected' : ''"
+      >
+        <span>{{ parts.name }}</span>
+        <span>€{{ parts.price }}</span>
+      </div>
+    </div>
+    <div class="modal-footer d-flex align-items-center" style="padding: 10px">
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-dark"
+        (click)="modal.close('Save click')"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-dark"
+        (click)="modal.close('Save click')"
+      >
+        Close
+      </button>
+    </div>
+  </ng-template>
+  
+  <mat-menu #status="matMenu">
+    <button (click)="changeStatus('Booked')" mat-menu-item>Booked</button>
+    <button (click)="changeStatus('In Service')" mat-menu-item>In Service</button>
+    <button (click)="changeStatus('Completed')" mat-menu-item>Completed</button>
+    <button (click)="changeStatus('Collected')" mat-menu-item>Collected</button>
+    <button (click)="changeStatus('Unrepairable')" mat-menu-item>
+      Unrepairable
+    </button>
+  </mat-menu>
+  
+  <mat-menu #mechanic="matMenu">
+    <button (click)="assignMechanic('Ryan')" mat-menu-item>Ryan</button>
+    <button (click)="assignMechanic('John')" mat-menu-item>John</button>
+    <button (click)="assignMechanic('Tom')" mat-menu-item>Tom</button>
+    <button (click)="assignMechanic('Rosana')" mat-menu-item>Rosana</button>
+  </mat-menu>
+  
