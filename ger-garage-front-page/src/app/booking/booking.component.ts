@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BookingService } from '../services/booking.service';
 import { GlobalService } from '../services/global.service';
+import { carsData } from './cars-data';
 
 @Component({
   selector: 'app-booking',
@@ -14,7 +15,7 @@ export class BookingComponent implements OnInit {
   selectService: boolean = true;
   slotsAvaialble: number = 8;
   todayDate: Date = new Date();
-  carsData: any = [];
+  carsData: any = carsData;
 
   bookingForm = this.fb.group({
     licenseNumber: ['', [Validators.required]],
@@ -30,7 +31,7 @@ export class BookingComponent implements OnInit {
     address: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     phoneNumber: ['', [Validators.required]],
-    make: ['', [Validators.required]],
+    make: [null, [Validators.required]],
     model: ['', [Validators.required]],
     engineSize: ['', [Validators.required]],
     engineType: ['', [Validators.required, Validators.email]],
